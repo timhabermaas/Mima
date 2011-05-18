@@ -20,8 +20,10 @@ class Mima
     @memory = Hash.new do |hash, key|
       hash[key] = Cell.new(0)
     end
+    @labels = Hash.new do |hash, key|
+      raise "Unknown label '#{key}'"
+    end
     @akku = 0
-    @labels = {}
     @constants = {}
     pointer = 0
 
@@ -56,7 +58,6 @@ class Mima
     pointer = @labels[:start]
     cmd = @memory[pointer]
     while cmd.command != :halt
-      p cmd.command
       if @@commands[cmd.command].nil?
         raise "Unknown command '#{cmd.command}'"
       else

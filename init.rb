@@ -4,7 +4,7 @@ Mima.init do |m|
     vm.akku = argument
   end
   m.add_command(:ldv, 1) do |vm, argument|
-    vm.akku = vm.memory[argument].value
+    vm.akku = vm.memory[argument].value(vm)
   end
   m.add_command(:stv, 2)
   m.add_command(:add, 3)
@@ -22,6 +22,4 @@ Mima.init do |m|
   m.add_command(:halt, 240)
   m.add_command(:not, 241)
   m.add_command(:rar, 242)
-
-
 end
