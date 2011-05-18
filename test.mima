@@ -1,0 +1,18 @@
+EINS:   DS   1
+M_eins DS   -1
+MAX    =    0x100
+ZAEHLER: DS 2;Zählvariable
+
+*      =    128
+;Hauptprogramm
+START:   LDV EINS
+        STV ZAEHLER ;das ist ein kommentar
+SCHLEIFE: LDV ZAEHLER ;UND NOCH EINER
+         ADD EINS
+         STV ZAEHLER
+         ;LDC MAX
+         EQL ZAEHLER ;EIN ERNEUTER KOMMENTAR
+         JMN FERTIG   ; SPRINGE IRGENDWOHIN
+         JMP SCHLEIFE
+STOP: HALT
+
