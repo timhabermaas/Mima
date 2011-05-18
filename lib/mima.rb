@@ -56,15 +56,15 @@ class Mima
 
   def run
     pointer = @labels[:start]
-    cmd = @memory[pointer]
+
     while not @stopped
+      cmd = @memory[pointer]
       if @@commands[cmd.command].nil?
         raise "Unknown command '#{cmd.command}'"
       else
         @@commands[cmd.command].execute self, cmd.resolved_argument(self)
       end
       pointer += 1
-      cmd = @memory[pointer]
     end
   end
 
