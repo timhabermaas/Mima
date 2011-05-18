@@ -6,4 +6,4 @@ tokenizer = Tokenizer.new(File.open("test.mima"))
 mima = Mima.new(tokenizer)
 mima.run
 
-puts "Akku: #{mima.akku}"
+puts "Akku: 0x#{mima.akku.to_s(16)}"
