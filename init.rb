@@ -40,7 +40,7 @@ Mima.init do |m|
   end
 
   m.add_command(:jmp, 8) do |vm, argument|
-    vm.program_counter = argument # ugly fix
+    vm.program_counter = argument
   end
 
   m.add_command(:jmn, 9) do |vm, argument|
