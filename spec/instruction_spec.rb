@@ -34,4 +34,10 @@ describe Instruction do
     d.should_receive(:opcode_for).at_least(:once).with(:or).and_return(0)
     Instruction.new(:or, "muh").value(d).should == 16
   end
+
+  it "should return the value once it was set" do
+    i = Instruction.new(:or)
+    i.value = 20
+    i.value(Dummy.new).should == 20
+  end
 end

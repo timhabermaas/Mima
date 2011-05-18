@@ -5,8 +5,8 @@ require './lib/cell'
 class Mima
   @@commands = {}
 
-  attr_accessor :akku
-  attr_reader :memory
+  attr_accessor :program_counter
+  attr_reader :memory, :akku
 
   def self.add_command(c, opcode, &block)
     @@commands[c] = Command.new(opcode, block)
@@ -18,7 +18,7 @@ class Mima
 
   def initialize(tokenizer)
     @memory = Hash.new do |hash, key|
-      hash[key] = Cell.new(0)
+      hash[key] = Instruction.new(:dummy_command, 0)
     end
     @labels = Hash.new do |hash, key|
       raise "Unknown label '#{key}'"
@@ -45,8 +45,12 @@ class Mima
           @labels[t[0].to_sym] = pointer
           Instruction.new t[1], replace_constant(t[2]), t[0]
         elsif t.size == 2
-          Instruction.new t[0], replace_constant(t[1])  # TODO reihenfolge (ADD HALT) check for first being a command
-          # @labels[t[0].to_sym] = pointer
+          if @@commands[t[0].to_sym]
+            Instruction.new t[0], replace_constant(t[1])
+          else
+            @labels[t[0].to_sym] = pointer
+            Instruction.new t[1]
+          end
         else
           Instruction.new t[0]
         end
@@ -55,16 +59,16 @@ class Mima
   end
 
   def run
-    pointer = @labels[:start]
+    @program_counter = @labels[:start]
 
     while not @stopped
-      cmd = @memory[pointer]
+      cmd = @memory[@program_counter]
       if @@commands[cmd.command].nil?
         raise "Unknown command '#{cmd.command}'"
       else
         @@commands[cmd.command].execute self, cmd.resolved_argument(self)
       end
-      pointer += 1
+      @program_counter += 1
     end
   end
 
@@ -78,6 +82,14 @@ class Mima
 
   def stop!
     @stopped = true
+  end
+
+  def akku_is_negative?
+    @akku & 0x800000 != 0
+  end
+
+  def akku=(a)
+    @akku = a & 0xFFFFFF
   end
 
 private
