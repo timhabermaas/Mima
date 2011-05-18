@@ -1,6 +1,5 @@
 require './lib/command'
 require './lib/instruction'
-require './lib/cell'
 
 class Mima
   @@commands = {}
