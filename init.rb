@@ -68,6 +68,6 @@ Mima.init do |m|
   end
 
   m.add_command(:rar, 242) do |vm, argument|
-    vm.akku = (vm.akku >> count) | (vm.akku << (32 - count))
+    vm.akku = (vm.akku >> count) | (vm.akku << (24 - count))
   end
 end
