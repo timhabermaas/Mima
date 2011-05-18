@@ -4,7 +4,6 @@ require 'instruction'
 class Mima
   @@commands = {}
 
-  attr_accessor :program_counter
   attr_reader :memory, :akku
 
   def self.add_command(c, opcode, &block)
@@ -67,7 +66,11 @@ class Mima
       else
         @@commands[cmd.command].execute self, cmd.resolved_argument(self)
       end
-      @program_counter += 1
+      if @program_counter_was_just_set
+        @program_counter_was_just_set = false
+      else
+        @program_counter += 1
+      end
     end
   end
 
@@ -89,6 +92,11 @@ class Mima
 
   def akku=(a)
     @akku = a & 0xFFFFFF
+  end
+
+  def program_counter=(c)
+    @program_counter = c
+    @program_counter_was_just_set = true
   end
 
 private

@@ -40,11 +40,11 @@ Mima.init do |m|
   end
 
   m.add_command(:jmp, 8) do |vm, argument|
-    vm.program_counter = argument - 1 # ugly fix
+    vm.program_counter = argument # ugly fix
   end
 
   m.add_command(:jmn, 9) do |vm, argument|
-    vm.program_counter = argument - 1 if vm.akku_is_negative?
+    vm.program_counter = argument if vm.akku_is_negative?
   end
 
   m.add_command(:ldiv, 10) do |vm, argument|
