@@ -1,3 +1,5 @@
+require 'mima'
+
 Mima.init do |m|
   m.add_command(:ds,  0)
 
