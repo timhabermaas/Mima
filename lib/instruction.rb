@@ -1,4 +1,4 @@
-require './lib/core_ext'
+require 'core_ext'
 
 class Instruction
 

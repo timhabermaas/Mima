@@ -1,5 +1,5 @@
-require './lib/command'
-require './lib/instruction'
+require 'command'
+require 'instruction'
 
 class Mima
   @@commands = {}

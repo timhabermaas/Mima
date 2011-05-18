@@ -1,6 +1,9 @@
-require './lib/tokenizer'
-require './lib/mima'
+$:.push(File.expand_path(File.dirname(__FILE__) + '/lib'))
+
+require 'tokenizer'
+require 'mima'
 require './init.rb'
+
 
 if ARGV[0]
   tokenizer = Tokenizer.new(File.open(ARGV[0]))
