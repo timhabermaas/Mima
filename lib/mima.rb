@@ -57,7 +57,7 @@ class Mima
   def run
     pointer = @labels[:start]
     cmd = @memory[pointer]
-    while cmd.command != :halt
+    while not @stopped
       if @@commands[cmd.command].nil?
         raise "Unknown command '#{cmd.command}'"
       else
@@ -74,6 +74,10 @@ class Mima
 
   def resolve_label(label)
     @labels[label.to_sym]
+  end
+
+  def stop!
+    @stopped = true
   end
 
 private
