@@ -23,7 +23,7 @@ Mima.init do |m|
     vm.akku = vm.akku & vm.memory[argument].value(vm) # TODO shorcut for accessing memory
   end
 
-  m.add_command(:and, 5) do |vm, argument|
+  m.add_command(:or, 5) do |vm, argument|
     vm.akku = vm.akku | vm.memory[argument].value(vm)
   end
 
@@ -32,7 +32,7 @@ Mima.init do |m|
   end
 
   m.add_command(:eql, 7) do |vm, argument|
-    if vm.akku == argument # vm.memory[argument].value(vm) ?
+    if vm.akku == vm.memory[argument].value(vm) ?
       vm.akku = -1
     else
       vm.akku = 0
@@ -56,9 +56,12 @@ Mima.init do |m|
   end
 
   m.add_command(:jms, 12) do |vm, argument|
+    vm.memory[argument].value = vm.program_counter + 1
+    vm.program_counter = argument + 1
   end
 
   m.add_command(:jind, 13) do |vm, argument|
+    vm.program_counter = vm.memory[argument].value
   end
 
   m.add_command(:halt, 240) do |vm, argument|
