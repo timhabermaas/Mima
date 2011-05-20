@@ -32,7 +32,7 @@ Mima.init do |m|
   end
 
   m.add_command(:eql, 7) do |vm, argument|
-    if vm.akku == vm.memory[argument].value(vm) ?
+    if vm.akku == vm.memory[argument].value(vm)
       vm.akku = -1
     else
       vm.akku = 0
